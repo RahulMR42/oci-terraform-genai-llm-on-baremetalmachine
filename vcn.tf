@@ -69,8 +69,8 @@ resource "oci_core_security_list" "sl" {
     source   = "0.0.0.0/0"
 
     tcp_options {
-      max = 8000
-      min = 8000
+      max = var.default_port
+      min = var.default_port
     }
   }
 
@@ -79,8 +79,18 @@ resource "oci_core_security_list" "sl" {
     source   = "0.0.0.0/0"
 
     tcp_options {
-      max = 8001
-      min = 8001
+      max = 443
+      min = 443
+    }
+  }
+
+  ingress_security_rules {
+    protocol = "6"
+    source   = "0.0.0.0/0"
+
+    tcp_options {
+      max = var.openai_port
+      min = var.openai_port
     }
   }
   defined_tags = { "${oci_identity_tag_namespace.ArchitectureCenterTagNamespace.name}.${oci_identity_tag.ArchitectureCenterTag.name}" = var.release }

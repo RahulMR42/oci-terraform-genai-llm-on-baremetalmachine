@@ -52,6 +52,10 @@ resource "random_string" "deploy_id" {
   special = false
 }
 
+resource "random_id" "api_key" {
+  byte_length = 64
+}
+
 ## Object Storage
 data "oci_objectstorage_namespace" "ns" {
   compartment_id = var.compartment_ocid

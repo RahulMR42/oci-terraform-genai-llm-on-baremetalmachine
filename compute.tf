@@ -80,6 +80,11 @@ resource oci_core_instance llm_host {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /home/opc/setup.sh",
+      "export api_key=${random_id.api_key.id}",
+      "export model_path=${var.model_path}",
+      "export huggingface_access_token=${var.huggingface_access_token}",
+      "export llm_port_default=${var.default_port}",
+      "export llm_port_openai=${var.openai_port}",
       "bash /home/opc/setup.sh"
     ]
 

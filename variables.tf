@@ -2,7 +2,6 @@
 ## All rights reserved. The Universal Permissive License (UPL), Version 1.0 as shown at http://oss.oracle.com/licenses/upl
 
 ### Common Variables
-
 variable "tenancy_ocid" {
   description = "OCI Tenancy OCID"
 }
@@ -95,8 +94,18 @@ variable "send_timeout_in_seconds" {
   default = 10
 }
 variable "openai_port" {
-  default = 8001
+  default = 9001
+}
+variable "default_port" {
+  default = 9000
 }
 variable "route_prefix" {
   default = "/llm"
+}
+#LLM specific variable
+variable "model_path" {
+  description = "LLM Path"
+}
+variable "huggingface_access_token" {
+  description = "HF read token"
 }

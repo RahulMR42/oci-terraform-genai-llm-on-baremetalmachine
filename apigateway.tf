@@ -44,8 +44,8 @@ resource "oci_apigateway_deployment" "apigw_deployment" {
 
           set_headers {
             items {
-              name   = "Host"
-              values = [oci_apigateway_gateway.apigw[0].hostname]
+              name   = "access_token"
+              values = ["rahulmr"]
               if_exists = "OVERWRITE"
             }
           }
