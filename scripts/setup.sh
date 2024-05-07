@@ -7,8 +7,8 @@ gpu_type="a10"
 ol_version="ol-8"
 llm_svc_path_default="vllm-inference-default"
 llm_svc_path_openai="vllm-inference-openai"
-python_version="python38"
-pip_version="pip3.8"
+python_version="python39"
+pip_version="pip3.9"
 llm_master_dir="/home/opc/vllm-master"
 parallel_gpu_count=4
 #Execution
@@ -42,7 +42,7 @@ mkdir ${llm_master_dir} >> ${log_file} 2>&1
 cd ${llm_master_dir} >> ${log_file} 2>&1
 virtualenv env >> ${log_file} 2>&1
 source env/bin/activate >> ${log_file} 2>&1
-pip install vllm >> ${log_file} 2>&1
+pip install vllm openai flash_attn>> ${log_file} 2>&1
 echo "[`date`]--- Python Vllm libraries are installed ---" |tee -a ${log_file} 2>&1
 sudo firewall-cmd  --zone=public --permanent --add-port ${llm_port_default}/tcp >> ${log_file} 2>&1
 sudo firewall-cmd --zone=public --permanent --add-port ${llm_port_openai}/tcp >> ${log_file} 2>&1
@@ -59,7 +59,7 @@ echo "export api_key=${api_key}">>bash_openai.sh
 echo "python -m vllm.entrypoints.openai.api_server --model ${model_path} --tensor-parallel-size ${parallel_gpu_count} --port ${llm_port_openai} --api-key "'${api_key}'"" >>bash_openai.sh
 echo "[`date`]---Startup file for vllm openai endpoint service  created ----" |tee -a ${log_file} 2>&1
 sudo cp /home/opc/openai.svc /etc/systemd/system/vllm-inference-openai.service >> ${log_file} 2>&1
-sudp cp /home/opc/default.svc /etc/systemd/system/vllm-inference-default.service >> ${log_file} 2>&1
+sudo cp /home/opc/default.svc /etc/systemd/system/vllm-inference-default.service >> ${log_file} 2>&1
 sudo systemctl daemon-reload >> ${log_file} 2>&1
 echo "[`date`]---service setup completed ---"|tee -a ${log_file} 2>&1
 sudo systemctl enable vllm-inference-openai.service |tee -a ${log_file} 2>&1
